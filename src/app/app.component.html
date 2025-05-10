@@ -1,0 +1,152 @@
+<header class="header">
+  <div class="container header-content">
+    <a href="#">
+      <img class="logo" src="/images/logo-no-bg.svg" alt="Helix GPO Logo" />
+    </a>
+    <nav class="main-nav">
+      <ul class="main-nav-list">
+        <li>
+          <a class="main-nav-link" href="#" (click)="scrollToElement('hero')"
+            >Start</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link"
+            href="#"
+            (click)="scrollToElement('dienstleistung')"
+            >Dienstleistung</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link"
+            href="#"
+            (click)="scrollToElement('about-us')"
+            >Über Uns</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link"
+            href="#"
+            (click)="scrollToElement('angebote')"
+            >Angebote</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link"
+            href="#"
+            (click)="scrollToElement('projects')"
+            >Projekte</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link"
+            href="#"
+            (click)="scrollToElement('testimonials')"
+            >Referenzen</a
+          >
+        </li>
+        <li>
+          <a
+            class="main-nav-link cta-link"
+            href="#"
+            (click)="scrollToElement('cta')"
+            >Jetzt Starten</a
+          >
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>
+
+<router-outlet></router-outlet>
+
+<footer class="footer">
+  <div class="container">
+    <div class="top-content">
+      <img src="images/logo-no-bg.svg" alt="Logo" />
+      <nav>
+        <ul class="main-nav-list">
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('hero')"
+            >
+              Start
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('dienstleistung')"
+            >
+              Dienstleistung
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('about-us')"
+            >
+              Über Uns
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('angebote')"
+            >
+              Angebote
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('projects')"
+            >
+              Projekte
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('testimonials')"
+            >
+              Referenzen
+            </button>
+          </li>
+          <li>
+            <button
+              class="main-nav-link-button"
+              (click)="scrollToElementByButton('cta')"
+            >
+              Kontakt
+            </button>
+          </li>
+        </ul>
+      </nav>
+      <div class="social-media">
+        <!-- Todo: mit Links verknüpfen -->
+        <img src="images/footer/facebook.png" alt="Facebook Icon" />
+        <img src="images/footer/insta.png" alt="Instagram Icon" />
+        <img src="images/footer/linked in.png" alt="Linked In Icon" />
+      </div>
+    </div>
+    <div class="bottom-content">
+      <p class="copyright">
+        &copy; <span class="year">2025</span> Helix GPO. All rights reserved.
+      </p>
+      <div class="functions">
+        <a class="function-link" (click)="routing('datenschutz')"
+          >Datenschutz</a
+        >
+        <a class="function-link" (click)="routing('impressum')">Impressum</a>
+        <a class="function-link pink-link">Feedback geben</a>
+      </div>
+    </div>
+  </div>
+</footer>
