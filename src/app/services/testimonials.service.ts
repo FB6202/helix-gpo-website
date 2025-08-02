@@ -243,6 +243,10 @@ export class TestimonialsService {
     return this.httpClient.get<TestimonialResponse[]>(this.baseUrl);
   }
 
+  getTestimonialsAverage(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/average`);
+  }
+
   getTempTestimonials(): TestimonialResponse[] {
     return this.tempTestimonials;
   }

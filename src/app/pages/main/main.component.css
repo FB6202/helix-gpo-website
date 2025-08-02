@@ -589,6 +589,20 @@ section {
   width: 100%;
 }
 
+.testimonials-text {
+  font-size: 1.8rem;
+  font-weight: 400;
+  line-height: 2.4rem;
+  margin-bottom: 8rem;
+  text-align: justify;
+}
+
+.rating {
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin: 0 1rem;
+}
+
 .testimonials-grid {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -606,6 +620,12 @@ section {
   box-shadow: 0rem 0.4rem 0.6rem 0.2rem var(--shadow-color);
   height: 46rem;
   border-bottom: 0.3rem solid var(--accent-blue);
+  transition: all 0.3s;
+}
+
+.testimonial-card:hover {
+  transform: translate(0, -0.4rem);
+  cursor: default;
 }
 
 .testimonial-header {
@@ -616,6 +636,7 @@ section {
   gap: 2.4rem;
 
   padding: 3.2rem 0;
+  padding-bottom: 1.6rem;
 }
 
 .image-container {
@@ -623,6 +644,12 @@ section {
   height: 10rem;
   border-radius: 50%;
   overflow: hidden;
+  border: 0.4rem solid var(--image-border-color);
+}
+
+.stars {
+  display: flex;
+  gap: 0.1rem;
 }
 
 .testimonial-content {
@@ -667,6 +694,32 @@ section {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--main-text-color-grey);
+}
+
+.page-decision {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.8rem;
+
+  margin-top: 8rem;
+}
+
+.page-button {
+  width: 1.2rem;
+  height: 1.2rem;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.page-button:hover {
+  transform: scale(1.2);
+}
+
+.page-button.active {
+  background-color: var(--accent-blue);
 }
 
 /* CTA Section */

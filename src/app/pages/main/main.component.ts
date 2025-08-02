@@ -3,14 +3,13 @@ import { ProjectsService } from '../../services/projects.service';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { Project } from '../../model/projects/project';
 import { TestimonialResponse } from '../../model/testimonials/testimonial-response';
-import { NgFor, NgStyle } from '@angular/common';
+import { NgStyle } from '@angular/common';
 import { UtilService } from '../../services/util.service';
-import { Router } from '@angular/router';
-import { IconComponent } from "../../util/icon/icon.component";
+import { IconComponent } from '../../util/icon/icon.component';
 
 @Component({
   selector: 'app-main',
-  imports: [NgFor, NgStyle, IconComponent],
+  imports: [NgStyle, IconComponent],
   templateUrl: './main.component.html',
   styleUrl: './main.component.css',
 })
@@ -22,6 +21,9 @@ export class MainComponent implements OnInit {
   shownTestimonials: TestimonialResponse[] = [];
   shownTestimonialsLeft: TestimonialResponse[] = [];
   shownTestimonialsRight: TestimonialResponse[] = [];
+
+  readonly ratingArray = [1, 2, 3, 4, 5];
+  averageRating = 0;
 
   loadingProjects = true;
   loadingTestimonials = true;
@@ -37,18 +39,18 @@ export class MainComponent implements OnInit {
   constructor(
     private projectsService: ProjectsService,
     private testimonialsService: TestimonialsService,
-    private utilService: UtilService,
-    private router: Router
+    private utilService: UtilService
   ) {}
 
   ngOnInit(): void {
-    //this.loadProjects();
-    //this.loadTestimonials();
+    this.loadProjects();
+    this.loadTestimonials();
+    this.getTestimonialsAverage();
 
-    this.projects = this.projectsService.tempProjects; // todo: remove this line later on!
+    this.projects = this.projectsService.tempProjects;
     this.shownProjects = this.projectsService.tempProjects.slice(0, 3);
 
-    this.testimonials = this.testimonialsService.tempTestimonials; // todo: remove this line later on!
+    this.testimonials = this.testimonialsService.tempTestimonials;
     this.shownTestimonialsLeft =
       this.testimonialsService.tempTestimonials.slice(0, 3);
     this.shownTestimonialsRight =
@@ -65,7 +67,7 @@ export class MainComponent implements OnInit {
       next: (projectsResponse) => {
         this.projects = projectsResponse;
         this.loadingProjects = false;
-        console.log(this.projects);
+        console.log(this.projects); // todo: remove this line later on!
       },
       error: (error) => {
         this.errorProjects = 'Fehler beim Laden der Projekte!';
@@ -80,11 +82,26 @@ export class MainComponent implements OnInit {
       next: (testimonialsResponse) => {
         this.testimonials = testimonialsResponse;
         this.loadingTestimonials = false;
-        console.log(this.testimonials);
+        console.log(this.testimonials); // todo: remove this line later on!
       },
       error: (error) => {
         this.errorTestimonials = 'Fehler beim Laden der Testimonials!';
         this.loadingTestimonials = false;
+      },
+    });
+  }
+
+  private getTestimonialsAverage() {
+    this.testimonialsService.getTestimonialsAverage().subscribe({
+      next: (average) => {
+        this.averageRating = average;
+      },
+      error: (error) => {
+        this.averageRating = 0;
+        console.error(
+          'Fehler beim Laden der durchschnittlichen Bewertung:',
+          error
+        );
       },
     });
   }
@@ -117,13 +134,13 @@ export class MainComponent implements OnInit {
     }
   }
 
-  toggleShowAllTestimonials() {
-    this.showLeftTestimonials = !this.showLeftTestimonials;
+  showLeftPage() {
+    this.showLeftTestimonials = true;
+    this.shownTestimonials = this.shownTestimonialsLeft;
+  }
 
-    if (this.showLeftTestimonials) {
-      this.shownTestimonials = this.shownTestimonialsLeft;
-    } else {
-      this.shownTestimonials = this.shownTestimonialsRight;
-    }
+  showRightPage() {
+    this.showLeftTestimonials = false;
+    this.shownTestimonials = this.shownTestimonialsRight;
   }
 }
