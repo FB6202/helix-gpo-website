@@ -1,4 +1,4 @@
-<header class="header">
+<header id="header" class="header">
   <div class="container header-content">
     <a href="#">
       <img class="logo" src="/images/logo-no-bg.svg" alt="Helix GPO Logo" />
@@ -6,7 +6,7 @@
     <nav class="main-nav">
       <ul class="main-nav-list">
         <li>
-          <a class="main-nav-link" href="#" (click)="scrollToElement('hero')"
+          <a class="main-nav-link" href="#" (click)="scrollToElementByButton('hero')"
             >Start</a
           >
         </li>
@@ -14,7 +14,7 @@
           <a
             class="main-nav-link"
             href="#"
-            (click)="scrollToElement('dienstleistung')"
+            (click)="scrollToElementByButton('dienstleistung')"
             >Dienstleistung</a
           >
         </li>
@@ -22,7 +22,7 @@
           <a
             class="main-nav-link"
             href="#"
-            (click)="scrollToElement('about-us')"
+            (click)="scrollToElementByButton('about-us')"
             >Über Uns</a
           >
         </li>
@@ -30,7 +30,7 @@
           <a
             class="main-nav-link"
             href="#"
-            (click)="scrollToElement('angebote')"
+            (click)="scrollToElementByButton('angebote')"
             >Angebote</a
           >
         </li>
@@ -38,7 +38,7 @@
           <a
             class="main-nav-link"
             href="#"
-            (click)="scrollToElement('projects')"
+            (click)="scrollToElementByButton('projects')"
             >Projekte</a
           >
         </li>
@@ -46,7 +46,7 @@
           <a
             class="main-nav-link"
             href="#"
-            (click)="scrollToElement('testimonials')"
+            (click)="scrollToElementByButton('testimonials')"
             >Referenzen</a
           >
         </li>
@@ -54,7 +54,7 @@
           <a
             class="main-nav-link cta-link"
             href="#"
-            (click)="scrollToElement('cta')"
+            (click)="scrollToElementByButton('cta')"
             >Jetzt Starten</a
           >
         </li>

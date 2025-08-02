@@ -49,7 +49,7 @@ html {
 }
 
 body {
-  font-family: "Rubik", sans-serif;
+  font-family: "Rubik", sans-serif !important;
   line-height: 1;
   font-weight: 400;
   color: var(--main-text-color-dark);
@@ -58,12 +58,35 @@ body {
   overflow-x: hidden;
 }
 
+.grid > * {
+  min-width: 0;
+}
+
+.material-symbols-outlined {
+  font-variation-settings: "FILL" 1, "wght" 700, "GRAD" 0, "opsz" 24;
+}
+
+.material-symbols-outlined {
+  font-family: "Material Symbols Outlined";
+  font-weight: normal;
+  font-style: normal;
+  font-size: 24px; /* Preferred icon size */
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+}
+
 :root {
   --main-white: #ffffff;
   --main-dark-blue: #0d1424;
 
   --main-text-color-light: #ffffff;
   --main-text-color-dark: #0d1424;
+  --main-text-color-grey: #868a92;
 
   --accent-blue: #03dbff;
   --accent-blue-hover: #03c5e6;
@@ -78,7 +101,9 @@ body {
   --accent-pink-active: #ca02aa;
 
   --shadow-color: #b6b9bd;
+  --dark-shadow-color: #000000;
   --blue-shadow-color: #0299b3;
+  --pink-shadow-color: #b00295;
   --white-shadow-color: #cccccc;
   --main-dark-blue-opaque: #0d1424cc;
   --main-dark-blue-border: #3d4350;
@@ -105,4 +130,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--accent-blue);
   cursor: pointer;
+}
+
+html,
+body {
+  height: 100%;
+}
+body {
+  margin: 0;
+  font-family: Roboto, "Helvetica Neue", sans-serif;
 }

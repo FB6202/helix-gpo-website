@@ -1,4 +1,4 @@
 export class Company {
-    private id!: number;
-    private name!: string;
+    id!: number;
+    name!: string;
 }

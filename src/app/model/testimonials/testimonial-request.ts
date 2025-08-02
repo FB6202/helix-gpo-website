@@ -1,8 +1,8 @@
 export class TestimonialRequest {
-    private id!: number;
-    private title!: string;
-    private description!: string;
-    private result!: number;
-    private showOnWebsite!: boolean;
-    private projectId!: number;
+    id!: number;
+    title!: string;
+    description!: string;
+    result!: number;
+    showOnWebsite!: boolean;
+    projectId!: number;
 }
