@@ -117,67 +117,67 @@
     <p class="headline-p">Infos</p>
     <h1 class="headline-text">Über Uns</h1>
     <div class="about-us-content">
-      <div class="about-us-info">
-        <p class="why-gp">Warum Geschäftsprozessmanagement?</p>
-        <p class="gp-text">
-          Unternehmen verlieren jedes Jahr bis zu 30% ihres Umsatzes - nur durch
-          ineffiziente Prozesse. Das geht besser! Mit smartem
-          Prozessmanagemement gestalten wir Abläufe effizienter, digitaler und
-          zukunftssicher.
-        </p>
-        <p class="gp-text-professional">
-          Professionell, persönlich und auf Augenhöhe!
-        </p>
-        <div class="button-links">
-          <button
-            class="button-link starten-link"
-            (click)="scrollToElementByButton('cta')"
-          >
-            Jetzt Starten
-          </button>
-          <button
-            class="button-link info-link"
-            (click)="scrollToElementByButton('angebote')"
-          >
-            Mehr Erfahren
-          </button>
+      <div class="info-content">
+        <div class="profile-image">
+          <img
+            src="images/about us/Henry Heller Image.jpg"
+            alt="Profilbild - Henry Heller"
+          />
+          <div class="hover-overlay"></div>
+          <div class="work">
+            Ausgebildeter Makler/Experte in Risikoabsicherung und Vorsorge (nach
+            § 34d / Finanzmakler) und Lebensretter beim DRK
+          </div>
+        </div>
+        <div>
+          <p class="name">Henry Heller</p>
+          <p class="role role-henry">Strategie & Kommunikation</p>
         </div>
       </div>
-      <div>
-        <div class="info-content first-content">
-          <div class="profile-image">
-            <img
-              src="images/logo-black-no-bg.svg"
-              alt="Profilbild - Henry Heller"
-            />
-            <div class="hover-overlay"></div>
-            <div class="work">
-              Professioneller Finanzdienstleister mit fundierter Erfahrung bei
-              der Fonds Finanz, FME und Klann Group
-            </div>
-          </div>
-          <div>
-            <p class="name">Henry Heller</p>
-            <p class="role role-henry">Strategie & Kommunikation</p>
+      <div class="info-content">
+        <div class="profile-image">
+          <img
+            src="images/about us/Felix Breuer Image.jpg"
+            alt="Profilbild - Felix Breuer"
+          />
+          <div class="hover-overlay"></div>
+          <div class="work">
+            Professioneller Softwareentwickler bei der MRH Trowe mit Bachelor
+            Abschluss in Wirtschaftsinformatik (B.Sc.) aus dem dualen Studium
+            bei 3M
           </div>
         </div>
-        <div class="info-content">
-          <div class="profile-image">
-            <img
-              src="images/logo-black-no-bg.svg"
-              alt="Profilbild - Felix Breuer"
-            />
-            <div class="hover-overlay"></div>
-            <div class="work">
-              Softwareentwickler mit Abschluss in Wirtschaftsinformatik (B.Sc.)
-              aus dem dualen Studium bei 3M
-            </div>
-          </div>
-          <div>
-            <p class="name">Felix Breuer</p>
-            <p class="role role-felix">Digitalisierung & Technologie</p>
-          </div>
+        <div>
+          <p class="name">Felix Breuer</p>
+          <p class="role role-felix">Digitalisierung & Technologie</p>
         </div>
+      </div>
+    </div>
+    <div class="about-us-info">
+      <p class="why-gp">Warum Geschäftsprozessmanagement?</p>
+      <p class="gp-text">
+        Unternehmen verlieren jedes Jahr bis zu 30% ihres Umsatzes - allein
+        durch ineffiziente Prozesse. Das muss nicht sein! Mit intelligentem,
+        modernem Geschäftsprozessmanagement gestalten wir Ihre Abläufe
+        effizienter, digitaler, zukunftssicher und nachhaltig optimiert - für
+        dauerhaften wirtschaftlichen Erfolg.
+      </p>
+      <p class="gp-text-professional">
+        Professionell, persönlich und auf Augenhöhe!
+      </p>
+      <div class="button-links">
+        <button
+          class="button-link starten-link"
+          (click)="scrollToElementByButton('cta')"
+        >
+          Jetzt Starten
+        </button>
+        <button
+          class="button-link info-link"
+          (click)="scrollToElementByButton('angebote')"
+        >
+          Mehr Erfahren
+        </button>
       </div>
     </div>
   </div>
@@ -329,7 +329,50 @@
   <div class="projects-container">
     <p class="headline-p">Erkunde</p>
     <h1 class="headline-text">Bisherige Projekte</h1>
-    <p class="coming-soon">Coming soon ...</p>
+
+    <div class="projects-grid">
+      <div *ngFor="let project of shownProjects" class="project-card">
+        <img
+          class="project-image"
+          src="images/angebote/Monitoring.jpg"
+          [alt]="project.title"
+        />
+        <div class="project-content">
+          <div class="project-text">
+            <p class="project-title">{{ project.title }}</p>
+            <p class="project-description">
+              {{ shortenText(project.description, 120, true) }}
+            </p>
+          </div>
+          <div class="tags">
+            <div *ngFor="let tag of project.tags">
+              <span class="tag" [ngStyle]="{ 'background-color': tag.color }">{{
+                tag.value
+              }}</span>
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="project-time">
+              <img
+                class="calendar-icon"
+                src="images/icons/calendar.png"
+                [alt]="project.title"
+              />
+              <span class="date-string">{{
+                formatMonthYear(project.startDate.toString())
+              }}</span>
+            </div>
+            <button class="more-button">Details</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="button-div">
+      <button class="projects-button" (click)="toggleShowAllProjects()">
+        {{ showAllProjectsText }}
+      </button>
+    </div>
   </div>
 </section>
 
@@ -337,7 +380,44 @@
   <div class="testimonials-container">
     <p class="headline-p">Vertraue</p>
     <h1 class="headline-text">Referenzen</h1>
-    <p class="coming-soon">Coming soon ...</p>
+
+    <div class="testimonials-grid">
+      <div
+        *ngFor="let testimonial of shownTestimonials"
+        class="testimonial-card"
+      >
+        <div class="testimonial-header">
+          <div class="image-container">
+            <img
+              class="testimonial-image"
+              src="images/angebote/Monitoring.jpg"
+              [alt]="testimonial.title"
+            />
+          </div>
+          <div class="stars">
+            <app-icon iconName="star"></app-icon>
+          </div>
+        </div>
+        <div class="testimonial-content">
+          <div class="description-container">
+            <p class="testimonial-description">
+              {{ shortenText(testimonial.description, 100, true) }}
+            </p>
+          </div>
+          <div class="testimonial-footer">
+            <div class="testimonial-name">
+              {{ testimonial.project.partner.name }}
+            </div>
+            <div class="testimonial-role">
+              {{ testimonial.project.partner.job }}
+            </div>
+            <div class="testimonial-company">
+              {{ testimonial.project.partner.company.name }}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 

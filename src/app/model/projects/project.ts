@@ -1,12 +1,14 @@
-import { Partner } from "../partners/partner";
+import { Partner } from '../partners/partner';
+import { Tag } from './tag';
 
 export class Project {
-    private id!: number;
-    private title!: string;
-    private description!: string;
-    private startDate!: Date;
-    private endDate!: Date;
-    private imageUrl!: string;
-    private showOnWebsite!: boolean;
-    private partner!: Partner;
+  id!: number;
+  title!: string;
+  description!: string;
+  startDate!: Date;
+  endDate!: Date;
+  imageUrl!: string;
+  tags!: Tag[];
+  showOnWebsite!: boolean;
+  partner!: Partner;
 }

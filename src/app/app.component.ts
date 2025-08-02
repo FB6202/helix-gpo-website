@@ -1,5 +1,7 @@
+import { ViewportScroller } from '@angular/common';
 import { Component } from '@angular/core';
-import { RouterOutlet, Router } from '@angular/router';
+import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
+import { filter, first } from 'rxjs';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +12,10 @@ import { RouterOutlet, Router } from '@angular/router';
 export class AppComponent {
   title = 'helix-gpo-website';
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private viewportScroller: ViewportScroller
+  ) {}
 
   ngOnInit() {
     const yearEl = document.querySelector('.year');
@@ -20,56 +25,27 @@ export class AppComponent {
     }
   }
 
-  scrollToElement(elementId: string) {
-    if (
-      this.router.url === '/impressum' ||
-      this.router.url === '/datenschutz'
-    ) {
-      this.router.navigate(['']).then(() => {
-        const element = document.getElementById(elementId);
-        if (!element) return;
-
-        const y = element.getBoundingClientRect().top;
-
-        window.scrollTo({
-          top: y,
-          behavior: 'smooth',
-        });
-      });
-    } else {
-      const element = document.getElementById(elementId);
-      if (!element) return;
-
-      const y = element.getBoundingClientRect().top;
-
-      window.scrollTo({
-        top: y,
-        behavior: 'smooth',
-      });
-    }
-  }
-
   scrollToElementByButton(elementId: string) {
-    if (
-      this.router.url === '/impressum' ||
-      this.router.url === '/datenschutz'
-    ) {
-      this.router.navigate(['']).then(() => {
-        const element = document.getElementById(elementId);
-        if (element) {
-          element.scrollIntoView({ behavior: 'smooth' });
-        }
+    const currentUrl = this.router.url;
+
+    if (currentUrl === '/impressum' || currentUrl === '/datenschutz') {
+      this.router.navigate(['/']).then(() => {
+        this.scrollToElement(elementId);
       });
     } else {
-      const element = document.getElementById(elementId);
-      if (element) {
-        element.scrollIntoView({ behavior: 'smooth' });
-      }
+      this.scrollToElement(elementId);
     }
   }
 
   routing(url: string) {
     this.router.navigate([url]);
-    window.scrollTo({ top: 0, behavior: 'smooth' });  
+    this.scrollToElement('header');
+  }
+
+  scrollToElement(elementId: string) {
+    const element = document.getElementById(elementId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
   }
 }
