@@ -333,11 +333,17 @@
     <div class="projects-grid">
       @for (project of shownProjects; track project.id; let idx = $index) {
       <div class="project-card">
-        <img
-          class="project-image"
-          src="images/angebote/Monitoring.jpg"
-          [alt]="project.title"
-        />
+        <div class="project-image-container">
+          <img
+            class="project-image"
+            [src]="
+              project.imageUrl === ''
+                ? 'images/placeholder profile picture.png'
+                : project.imageUrl
+            "
+            [alt]="project.title"
+          />
+        </div>
         <div class="project-content">
           <div class="project-text">
             <p class="project-title">{{ project.title }}</p>
@@ -365,18 +371,26 @@
                 formatMonthYear(project.startDate.toString())
               }}</span>
             </div>
-            <button class="more-button">Details</button>
+            <button
+              (click)="handleProjectDetailsButtonClick(project.id)"
+              class="more-button"
+            >
+              Details
+            </button>
           </div>
         </div>
       </div>
       } @empty {
-      <p>Keine Projekte vorhanden</p>
+      <p class="testimonials-text">Keine Projekte vorhanden</p>
       }
     </div>
 
     @if (projects.length > 3) {
     <div class="button-div">
-      <button class="projects-button" (click)="toggleShowAllProjects()">
+      <button
+        class="projects-button"
+        (click)="handleToggleShowAllProjectsButton()"
+      >
         {{ showAllProjectsText }}
       </button>
     </div>
@@ -395,6 +409,7 @@
       auf {{ testimonials.length }} verifizierten Erfahrungsberichten!
     </p>
 
+    @if (!loadingTestimonials) {
     <div class="testimonials-grid">
       @for (testimonial of shownTestimonials; track testimonial.id; let idx =
       $index) {
@@ -403,7 +418,11 @@
           <div class="image-container">
             <img
               class="testimonial-image"
-              src="images/angebote/Monitoring.jpg"
+              [src]="
+                testimonial.imageUrl === ''
+                  ? 'images/placeholder profile picture.png'
+                  : testimonial.imageUrl
+              "
               [alt]="testimonial.title"
             />
           </div>
@@ -412,7 +431,7 @@
             <app-icon
               [iconName]="'star'"
               [iconSize]="'2.4rem'"
-              [iconColor]="i < testimonial.result ? '#fc03d5' : '#cccccc'"
+              [iconColor]="i > testimonial.result ? '#cccccc' : '#fc03d5'"
             ></app-icon>
             }
           </div>
@@ -425,38 +444,51 @@
           </div>
           <div class="testimonial-footer">
             <div class="testimonial-name">
-              {{ testimonial.project.partner.name }}
+              {{ testimonial.websiteProjectDto.websitePartnerDto.name }}
             </div>
             <div class="testimonial-role">
-              {{ testimonial.project.partner.job }}
+              {{ testimonial.websiteProjectDto.websitePartnerDto.job }}
             </div>
             <div class="testimonial-company">
-              {{ testimonial.project.partner.company.name }}
+              {{
+                testimonial.websiteProjectDto.websitePartnerDto
+                  .websiteCompanyDto.name
+              }}
             </div>
           </div>
         </div>
       </div>
       } @empty {
-      <p>Keine Referenzen vorhanden</p>
+      <p class="testimonials-text">Keine Referenzen vorhanden</p>
       }
     </div>
-
+    } @else {
+    <div>
+      <app-icon
+        class="loading-spinner"
+        iconName="progress_activity"
+        iconColor=""
+        iconSize="2.8rem"
+      ></app-icon>
+    </div>
+    } @if (testimonials.length > 3) {
     <div class="page-decision">
       <button
         class="page-button left-page-button"
         [ngStyle]="{
           'background-color': showLeftTestimonials ? '#03dbff' : '#cccccc'
         }"
-        (click)="showLeftPage()"
+        (click)="handleShowLeftPage()"
       ></button>
       <button
         class="page-button right-page-button"
         [ngStyle]="{
           'background-color': showLeftTestimonials ? '#cccccc' : '#03dbff'
         }"
-        (click)="showRightPage()"
+        (click)="handleShowRightPage()"
       ></button>
     </div>
+    }
   </div>
 </section>
 

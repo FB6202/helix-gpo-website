@@ -10,5 +10,5 @@ export class Project {
   imageUrl!: string;
   tags!: Tag[];
   showOnWebsite!: boolean;
-  partner!: Partner;
+  websitePartnerDto!: Partner;
 }

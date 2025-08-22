@@ -5,9 +5,9 @@ export class TestimonialResponse {
     title!: string;
     description!: string;
     result!: number;
-    image!: string;
+    imageUrl!: string;
     creationDate!: Date;
     lastUpdate!: Date;
     showOnWebsite!: boolean;
-    project!: Project;
+    websiteProjectDto!: Project;
 }

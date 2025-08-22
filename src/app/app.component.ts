@@ -1,7 +1,5 @@
-import { ViewportScroller } from '@angular/common';
-import { Component } from '@angular/core';
-import { RouterOutlet, Router, NavigationEnd } from '@angular/router';
-import { filter, first } from 'rxjs';
+import { Component, inject } from '@angular/core';
+import { RouterOutlet, Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -12,12 +10,13 @@ import { filter, first } from 'rxjs';
 export class AppComponent {
   title = 'helix-gpo-website';
 
-  constructor(
-    private router: Router,
-    private viewportScroller: ViewportScroller
-  ) {}
+  private router: Router = inject(Router);
 
   ngOnInit() {
+    this.updateYear();
+  }
+
+  updateYear() {
     const yearEl = document.querySelector('.year');
     const currentYear = new Date().getFullYear();
     if (yearEl) {
@@ -28,7 +27,13 @@ export class AppComponent {
   scrollToElementByButton(elementId: string) {
     const currentUrl = this.router.url;
 
-    if (currentUrl === '/impressum' || currentUrl === '/datenschutz') {
+    if (
+      currentUrl === '/impressum' ||
+      currentUrl === '/datenschutz' ||
+      currentUrl === '/feedback' ||
+      currentUrl === '/error' ||
+      currentUrl.startsWith('/project-details')
+    ) {
       this.router.navigate(['/']).then(() => {
         this.scrollToElement(elementId);
       });
@@ -38,8 +43,9 @@ export class AppComponent {
   }
 
   routing(url: string) {
-    this.router.navigate([url]);
-    this.scrollToElement('header');
+    this.router.navigate([url]).then(() => {
+      this.scrollToElement('header');
+    });
   }
 
   scrollToElement(elementId: string) {

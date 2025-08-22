@@ -38,11 +38,11 @@ export class ProjectsService {
         },
       ],
       showOnWebsite: true,
-      partner: {
+      websitePartnerDto: {
         id: 1,
         name: 'Michael Breuer',
         job: 'Steuerberater',
-        company: {
+        websiteCompanyDto: {
           id: 1,
           name: 'Helix ProcessCraft GmbHg',
         },
@@ -71,11 +71,11 @@ export class ProjectsService {
         },
       ],
       showOnWebsite: true,
-      partner: {
+      websitePartnerDto: {
         id: 2,
         name: 'Michael Breuer',
         job: 'Steuerberater',
-        company: {
+        websiteCompanyDto: {
           id: 2,
           name: 'Neuss Process Consulting',
         },
@@ -104,11 +104,11 @@ export class ProjectsService {
         },
       ],
       showOnWebsite: true,
-      partner: {
+      websitePartnerDto: {
         id: 3,
         name: 'Michael Breuer',
         job: 'Steuerberater',
-        company: {
+        websiteCompanyDto: {
           id: 3,
           name: 'Helix Digital Consulting',
         },
@@ -133,11 +133,11 @@ export class ProjectsService {
         },
       ],
       showOnWebsite: true,
-      partner: {
+      websitePartnerDto: {
         id: 4,
         name: 'Michael Breuer',
         job: 'Steuerberater',
-        company: {
+        websiteCompanyDto: {
           id: 4,
           name: 'Helix Prozess & IT GmbH',
         },
@@ -170,11 +170,11 @@ export class ProjectsService {
         },
       ],
       showOnWebsite: true,
-      partner: {
+      websitePartnerDto: {
         id: 5,
         name: 'Michael Breuer',
         job: 'Steuerberater',
-        company: {
+        websiteCompanyDto: {
           id: 5,
           name: 'Helix ProcessCraft GmbH',
         },
@@ -190,5 +190,9 @@ export class ProjectsService {
 
   getTempProjects(): Project[] {
     return this.tempProjects;
+  }
+
+  getProjectById(id: number): Observable<Project> {
+    return this.httpClient.get<Project>(`${this.baseUrl}/${id}`);
   }
 }

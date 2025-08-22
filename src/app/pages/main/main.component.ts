@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit } from '@angular/core';
 import { ProjectsService } from '../../services/projects.service';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { Project } from '../../model/projects/project';
@@ -6,6 +6,7 @@ import { TestimonialResponse } from '../../model/testimonials/testimonial-respon
 import { NgStyle } from '@angular/common';
 import { UtilService } from '../../services/util.service';
 import { IconComponent } from '../../util/icon/icon.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-main',
@@ -14,6 +15,12 @@ import { IconComponent } from '../../util/icon/icon.component';
   styleUrl: './main.component.css',
 })
 export class MainComponent implements OnInit {
+  private projectsService: ProjectsService = inject(ProjectsService);
+  private testimonialsService: TestimonialsService =
+    inject(TestimonialsService);
+  private utilService: UtilService = inject(UtilService);
+  private router: Router = inject(Router);
+
   projects: Project[] = [];
   shownProjects: Project[] = [];
 
@@ -28,65 +35,52 @@ export class MainComponent implements OnInit {
   loadingProjects = true;
   loadingTestimonials = true;
 
-  errorProjects?: string;
-  errorTestimonials?: string;
-
   showAllProjects = false;
   showAllProjectsText = 'Mehr Anzeigen';
 
   showLeftTestimonials = true;
-
-  constructor(
-    private projectsService: ProjectsService,
-    private testimonialsService: TestimonialsService,
-    private utilService: UtilService
-  ) {}
 
   ngOnInit(): void {
     this.loadProjects();
     this.loadTestimonials();
     this.getTestimonialsAverage();
 
-    this.projects = this.projectsService.tempProjects;
-    this.shownProjects = this.projectsService.tempProjects.slice(0, 3);
+    //this.projects = this.projectsService.tempProjects;
+    //this.shownProjects = this.projectsService.tempProjects.slice(0, 3);
 
-    this.testimonials = this.testimonialsService.tempTestimonials;
-    this.shownTestimonialsLeft =
-      this.testimonialsService.tempTestimonials.slice(0, 3);
-    this.shownTestimonialsRight =
-      this.testimonialsService.tempTestimonials.slice(3, 6);
-    this.shownTestimonials = this.shownTestimonialsLeft;
-
-    console.log(this.shownTestimonialsLeft);
-    console.log(this.shownTestimonialsRight);
+    //this.testimonials = this.testimonialsService.tempTestimonials;
+    //this.shownTestimonialsLeft = this.testimonialsService.tempTestimonials.slice(0, 3);
+    //this.shownTestimonialsRight = this.testimonialsService.tempTestimonials.slice(3, 6);
+    //this.shownTestimonials = this.shownTestimonialsLeft;
   }
 
   private loadProjects() {
-    // todo: exception handling im frontend!
+    this.loadingProjects = true;
     this.projectsService.getAllProjects().subscribe({
       next: (projectsResponse) => {
         this.projects = projectsResponse;
+        this.shownProjects = this.projects.slice(0, 3);
         this.loadingProjects = false;
-        console.log(this.projects); // todo: remove this line later on!
       },
       error: (error) => {
-        this.errorProjects = 'Fehler beim Laden der Projekte!';
         this.loadingProjects = false;
+        console.error('Fehler beim Laden der Projekte:', error);
       },
     });
   }
 
   private loadTestimonials() {
-    // todo: exception handling im frontend!
     this.testimonialsService.getAllTestimonials().subscribe({
       next: (testimonialsResponse) => {
         this.testimonials = testimonialsResponse;
+        this.shownTestimonialsLeft = this.testimonials.slice(0, 3);
+        this.shownTestimonialsRight = this.testimonials.slice(3, 6);
+        this.shownTestimonials = this.shownTestimonialsLeft;
         this.loadingTestimonials = false;
-        console.log(this.testimonials); // todo: remove this line later on!
       },
       error: (error) => {
-        this.errorTestimonials = 'Fehler beim Laden der Testimonials!';
         this.loadingTestimonials = false;
+        console.error('Fehler beim Laden der Referenzen:', error);
       },
     });
   }
@@ -121,7 +115,13 @@ export class MainComponent implements OnInit {
     return this.utilService.formatMonthYear(dateString);
   }
 
-  toggleShowAllProjects() {
+  handleProjectDetailsButtonClick(projectId: number) {
+    this.router.navigate(['project-details', projectId]).then(() => {
+      this.scrollToElementByButton('header');
+    });
+  }
+
+  handleToggleShowAllProjectsButton() {
     this.showAllProjects = !this.showAllProjects;
 
     if (this.showAllProjects) {
@@ -134,12 +134,12 @@ export class MainComponent implements OnInit {
     }
   }
 
-  showLeftPage() {
+  handleShowLeftPage() {
     this.showLeftTestimonials = true;
     this.shownTestimonials = this.shownTestimonialsLeft;
   }
 
-  showRightPage() {
+  handleShowRightPage() {
     this.showLeftTestimonials = false;
     this.shownTestimonials = this.shownTestimonialsRight;
   }
