@@ -4,5 +4,5 @@ export class Partner {
     id!: number;
     name!: string;
     job!: string;
-    company!: Company;
+    websiteCompanyDto!: Company;
 }

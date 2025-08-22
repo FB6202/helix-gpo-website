@@ -158,9 +158,9 @@
       <p class="gp-text">
         Unternehmen verlieren jedes Jahr bis zu 30% ihres Umsatzes - allein
         durch ineffiziente Prozesse. Das muss nicht sein! Mit intelligentem,
-        modernem Geschäftsprozessmanagement gestalten wir Ihre Abläufe
-        effizienter, digitaler, zukunftssicher und nachhaltig optimiert - für
-        dauerhaften wirtschaftlichen Erfolg.
+        modernem Geschäftsprozessmanagement gestalten wir Deine
+        Unternehmensabläufe effizienter, digitaler, zukunftssicher und
+        nachhaltig optimiert - für dauerhaften wirtschaftlichen Erfolg.
       </p>
       <p class="gp-text-professional">
         Professionell, persönlich und auf Augenhöhe!
@@ -319,8 +319,8 @@
       deshalb entwickeln wir maßgeschneiderte Lösungen und Konditionen.
     </p>
     <p class="angebot-text">
-      Die Preise sind nicht pauschal, sondern richten sich jeweils nach Projekt
-      und entsprechendem Umfang.
+      Die Preise sind daher nicht pauschal, sondern richten sich jeweils nach
+      Projekt und entsprechendem Umfang.
     </p>
   </div>
 </section>
@@ -331,12 +331,19 @@
     <h1 class="headline-text">Bisherige Projekte</h1>
 
     <div class="projects-grid">
-      <div *ngFor="let project of shownProjects" class="project-card">
-        <img
-          class="project-image"
-          src="images/angebote/Monitoring.jpg"
-          [alt]="project.title"
-        />
+      @for (project of shownProjects; track project.id; let idx = $index) {
+      <div class="project-card">
+        <div class="project-image-container">
+          <img
+            class="project-image"
+            [src]="
+              project.imageUrl === ''
+                ? 'images/placeholder profile picture.png'
+                : project.imageUrl
+            "
+            [alt]="project.title"
+          />
+        </div>
         <div class="project-content">
           <div class="project-text">
             <p class="project-title">{{ project.title }}</p>
@@ -345,11 +352,13 @@
             </p>
           </div>
           <div class="tags">
-            <div *ngFor="let tag of project.tags">
+            @for (tag of project.tags; track tag.value; let tagIdx = $index) {
+            <div>
               <span class="tag" [ngStyle]="{ 'background-color': tag.color }">{{
                 tag.value
               }}</span>
             </div>
+            }
           </div>
           <div class="card-footer">
             <div class="project-time">
@@ -362,17 +371,30 @@
                 formatMonthYear(project.startDate.toString())
               }}</span>
             </div>
-            <button class="more-button">Details</button>
+            <button
+              (click)="handleProjectDetailsButtonClick(project.id)"
+              class="more-button"
+            >
+              Details
+            </button>
           </div>
         </div>
       </div>
+      } @empty {
+      <p class="testimonials-text">Keine Projekte vorhanden</p>
+      }
     </div>
 
+    @if (projects.length > 3) {
     <div class="button-div">
-      <button class="projects-button" (click)="toggleShowAllProjects()">
+      <button
+        class="projects-button"
+        (click)="handleToggleShowAllProjectsButton()"
+      >
         {{ showAllProjectsText }}
       </button>
     </div>
+    }
   </div>
 </section>
 
@@ -381,21 +403,37 @@
     <p class="headline-p">Vertraue</p>
     <h1 class="headline-text">Referenzen</h1>
 
+    <p class="testimonials-text">
+      Unsere Kunden bewerten uns im Durchschnitt mit
+      <span class="rating">{{ averageRating }}</span> von 5 Sternen - basierend
+      auf {{ testimonials.length }} verifizierten Erfahrungsberichten!
+    </p>
+
+    @if (!loadingTestimonials) {
     <div class="testimonials-grid">
-      <div
-        *ngFor="let testimonial of shownTestimonials"
-        class="testimonial-card"
-      >
+      @for (testimonial of shownTestimonials; track testimonial.id; let idx =
+      $index) {
+      <div class="testimonial-card">
         <div class="testimonial-header">
           <div class="image-container">
             <img
               class="testimonial-image"
-              src="images/angebote/Monitoring.jpg"
+              [src]="
+                testimonial.imageUrl === ''
+                  ? 'images/placeholder profile picture.png'
+                  : testimonial.imageUrl
+              "
               [alt]="testimonial.title"
             />
           </div>
           <div class="stars">
-            <app-icon iconName="star"></app-icon>
+            @for (i of ratingArray; track i; let starIdx = $index) {
+            <app-icon
+              [iconName]="'star'"
+              [iconSize]="'2.4rem'"
+              [iconColor]="i > testimonial.result ? '#cccccc' : '#fc03d5'"
+            ></app-icon>
+            }
           </div>
         </div>
         <div class="testimonial-content">
@@ -406,27 +444,60 @@
           </div>
           <div class="testimonial-footer">
             <div class="testimonial-name">
-              {{ testimonial.project.partner.name }}
+              {{ testimonial.websiteProjectDto.websitePartnerDto.name }}
             </div>
             <div class="testimonial-role">
-              {{ testimonial.project.partner.job }}
+              {{ testimonial.websiteProjectDto.websitePartnerDto.job }}
             </div>
             <div class="testimonial-company">
-              {{ testimonial.project.partner.company.name }}
+              {{
+                testimonial.websiteProjectDto.websitePartnerDto
+                  .websiteCompanyDto.name
+              }}
             </div>
           </div>
         </div>
       </div>
+      } @empty {
+      <p class="testimonials-text">Keine Referenzen vorhanden</p>
+      }
     </div>
+    } @else {
+    <div>
+      <app-icon
+        class="loading-spinner"
+        iconName="progress_activity"
+        iconColor=""
+        iconSize="2.8rem"
+      ></app-icon>
+    </div>
+    } @if (testimonials.length > 3) {
+    <div class="page-decision">
+      <button
+        class="page-button left-page-button"
+        [ngStyle]="{
+          'background-color': showLeftTestimonials ? '#03dbff' : '#cccccc'
+        }"
+        (click)="handleShowLeftPage()"
+      ></button>
+      <button
+        class="page-button right-page-button"
+        [ngStyle]="{
+          'background-color': showLeftTestimonials ? '#cccccc' : '#03dbff'
+        }"
+        (click)="handleShowRightPage()"
+      ></button>
+    </div>
+    }
   </div>
 </section>
 
 <section class="cta-section" id="cta">
   <div class="cta-container">
     <p class="headline-p">Jetzt</p>
-    <h1 class="headline-text">Kontakt Aufnehmen</h1>
+    <h1 class="headline-text">Kontakt aufnehmen</h1>
     <p class="cta-text">
-      Kontaktiere uns auf einem Kanal deiner Wahl und vereinbare einen
+      Kontaktiere uns auf einem Kanal Deiner Wahl und vereinbare einen
       kostenlosen Ersttermin!
     </p>
     <div class="channels">

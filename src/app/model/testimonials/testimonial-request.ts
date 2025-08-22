@@ -4,5 +4,4 @@ export class TestimonialRequest {
     description!: string;
     result!: number;
     showOnWebsite!: boolean;
-    projectId!: number;
 }

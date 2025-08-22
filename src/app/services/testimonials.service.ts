@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
+import { catchError, Observable, throwError } from 'rxjs';
 import { TestimonialResponse } from '../model/testimonials/testimonial-response';
+import { WebsiteTestimonialRequest } from '../model/testimonials/website-testimonial-request';
 
 @Injectable({
   providedIn: 'root',
@@ -17,11 +18,11 @@ export class TestimonialsService {
       description:
         'Dank Helix GPO konnten wir unsere internen Abläufe deutlich verschlanken und automatisieren.',
       result: 5,
-      image: 'https://example.com/images/testimonial1.jpg',
+      imageUrl: '',
       creationDate: new Date('2025-01-01'),
       lastUpdate: new Date('2025-01-01'),
       showOnWebsite: true,
-      project: {
+      websiteProjectDto: {
         id: 1,
         title: 'Quantum Echoes',
         description:
@@ -48,11 +49,11 @@ export class TestimonialsService {
           },
         ],
         showOnWebsite: true,
-        partner: {
+        websitePartnerDto: {
           id: 1,
           name: 'Michael Breuer',
           job: 'Steuerberater',
-          company: {
+          websiteCompanyDto: {
             id: 1,
             name: 'Helix ProcessCraft GmbHg',
           },
@@ -65,11 +66,11 @@ export class TestimonialsService {
       description:
         'Die Softwareintegration hat unser Kundenmanagement verbessert und Zeit eingespart.',
       result: 4,
-      image: 'https://example.com/images/testimonial1.jpg',
+      imageUrl: '',
       creationDate: new Date('2025-11-01'),
       lastUpdate: new Date('2025-11-01'),
       showOnWebsite: true,
-      project: {
+      websiteProjectDto: {
         id: 2,
         title: 'Vortex Venture',
         description:
@@ -92,11 +93,11 @@ export class TestimonialsService {
           },
         ],
         showOnWebsite: true,
-        partner: {
+        websitePartnerDto: {
           id: 2,
           name: 'Michael Breuer',
           job: 'Steuerberater',
-          company: {
+          websiteCompanyDto: {
             id: 2,
             name: 'Neuss Process Consulting',
           },
@@ -109,11 +110,11 @@ export class TestimonialsService {
       description:
         'Wir schätzen die persönliche Betreuung über den Service hinaus — jederzeit erreichbar.',
       result: 5,
-      image: 'https://example.com/images/testimonial1.jpg',
+      imageUrl: '',
       creationDate: new Date('2025-10-01'),
       lastUpdate: new Date('2025-10-01'),
       showOnWebsite: true,
-      project: {
+      websiteProjectDto: {
         id: 3,
         title: 'Neural Odyssey',
         description:
@@ -136,11 +137,11 @@ export class TestimonialsService {
           },
         ],
         showOnWebsite: true,
-        partner: {
+        websitePartnerDto: {
           id: 3,
           name: 'Michael Breuer',
           job: 'Steuerberater',
-          company: {
+          websiteCompanyDto: {
             id: 3,
             name: 'Helix Digital Consulting',
           },
@@ -153,11 +154,11 @@ export class TestimonialsService {
       description:
         'Von der Analyse bis zur Softwareentwicklung: maßgeschneiderte Lösungen auf höchstem Niveau.',
       result: 5,
-      image: 'https://example.com/images/testimonial1.jpg',
+      imageUrl: '',
       creationDate: new Date('2025-09-01'),
       lastUpdate: new Date('2025-09-01'),
       showOnWebsite: true,
-      project: {
+      websiteProjectDto: {
         id: 4,
         title: 'Echoes of Silence',
         description:
@@ -176,11 +177,11 @@ export class TestimonialsService {
           },
         ],
         showOnWebsite: true,
-        partner: {
+        websitePartnerDto: {
           id: 4,
           name: 'Michael Breuer',
           job: 'Steuerberater',
-          company: {
+          websiteCompanyDto: {
             id: 4,
             name: 'Helix Prozess & IT GmbH',
           },
@@ -193,11 +194,11 @@ export class TestimonialsService {
       description:
         'Von der Analyse bis zur Softwareentwicklung: maßgeschneiderte Lösungen auf höchstem Niveau.',
       result: 4,
-      image: 'https://example.com/images/testimonial1.jpg',
+      imageUrl: '',
       creationDate: new Date('2025-04-01'),
       lastUpdate: new Date('2025-05-01'),
       showOnWebsite: true,
-      project: {
+      websiteProjectDto: {
         id: 5,
         title: 'Aurora Synthesis',
         description:
@@ -224,11 +225,11 @@ export class TestimonialsService {
           },
         ],
         showOnWebsite: true,
-        partner: {
+        websitePartnerDto: {
           id: 5,
           name: 'Michael Breuer',
           job: 'Steuerberater',
-          company: {
+          websiteCompanyDto: {
             id: 5,
             name: 'Helix ProcessCraft GmbH',
           },
@@ -243,6 +244,22 @@ export class TestimonialsService {
     return this.httpClient.get<TestimonialResponse[]>(this.baseUrl);
   }
 
+  getTestimonialsAverage(): Observable<number> {
+    return this.httpClient.get<number>(`${this.baseUrl}/average`);
+  }
+
+  sendTestimonialRequest(formData: FormData): Observable<TestimonialResponse> {
+    return this.httpClient
+      .post<TestimonialResponse>(this.baseUrl, formData)
+      .pipe(
+        catchError((error: HttpErrorResponse) => {
+          const body = error.error;
+          return throwError(() => body);
+        })
+      );
+  }
+
+  // todo: löschen später
   getTempTestimonials(): TestimonialResponse[] {
     return this.tempTestimonials;
   }
