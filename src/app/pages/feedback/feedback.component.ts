@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { TestimonialsService } from '../../services/testimonials.service';
 import { UtilService } from '../../services/util.service';
 import { NgStyle } from '@angular/common';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-feedback',
@@ -15,6 +16,7 @@ import { NgStyle } from '@angular/common';
 export class FeedbackComponent implements OnInit {
   private testimonialService: TestimonialsService = inject(TestimonialsService);
   private utilService: UtilService = inject(UtilService);
+  private router: Router = inject(Router);
 
   websiteTestimonialRequest: WebsiteTestimonialRequest = {
     testimonialDtoRequest: {
@@ -39,6 +41,8 @@ export class FeedbackComponent implements OnInit {
   showRatingWarning = false;
   showAuthTokenWarning = false;
 
+  sendingProcessing = false;
+
   ngOnInit(): void {
     this.websiteTestimonialRequest.testimonialDtoRequest.result =
       this.ratingResult;
@@ -56,13 +60,17 @@ export class FeedbackComponent implements OnInit {
   handleSendButtonClick() {
     if (this.validateFeedbackFormInputs()) {
       const formData = this.fillFormData();
+      this.sendingProcessing = true;
+
       this.testimonialService.sendTestimonialRequest(formData).subscribe({
         next: (response) => {
           this.showSuccess('Dein Feedback wurde erfolgreich versendet!');
+          this.sendingProcessing = false;
           this.resetForm();
         },
         error: (errorBody) => {
           console.log(errorBody);
+          this.sendingProcessing = false;
           this.showError(errorBody.message);
         },
       });
@@ -133,5 +141,9 @@ export class FeedbackComponent implements OnInit {
     if (input.files && input.files.length > 0) {
       this.selectedFile = input.files[0];
     }
+  }
+
+  handleBackButtonClick() {
+    this.router.navigate(['/']);
   }
 }

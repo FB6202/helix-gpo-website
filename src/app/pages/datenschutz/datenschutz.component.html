@@ -1,6 +1,12 @@
 <section class="datenschutz-section">
   <div class="container">
-    <h1 class="headline-text">Datenschutzerklärung</h1>
+    <div class="datenschutz-header">
+      <h1 class="headline-text">Datenschutzerklärung</h1>
+      <button class="back-button" (click)="handleBackButtonClick()">
+        <app-icon iconName="redo" iconColor="#0d1424" iconSize="2.4rem"></app-icon>
+        <p>zurück</p>
+      </button>
+    </div>
 
     <h2 class="header-text">1. Name und Kontaktdaten des Verantwortlichen</h2>
     <p class="line name">

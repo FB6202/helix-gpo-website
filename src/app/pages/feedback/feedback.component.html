@@ -2,8 +2,18 @@
   <div class="feedback-container">
     <div class="feedback-card">
       <div class="card-header">
-        <p class="headline-p">Teile</p>
-        <h1 class="headline-text">Deine Erfahrungen</h1>
+        <div class="card-left-header">
+          <p class="headline-p">Teile</p>
+          <h1 class="headline-text">Deine Erfahrungen</h1>
+        </div>
+        <button class="back-button" (click)="handleBackButtonClick()">
+          <app-icon
+            iconName="redo"
+            iconColor="#0d1424"
+            iconSize="2.2rem"
+          ></app-icon>
+          <p class="back-text">zurück</p>
+        </button>
       </div>
 
       <div class="card-content">
@@ -32,7 +42,9 @@
               }
             </div>
             <input
-              [(ngModel)]="websiteTestimonialRequest.testimonialDtoRequest.title"
+              [(ngModel)]="
+                websiteTestimonialRequest.testimonialDtoRequest.title
+              "
               class="feedback-input"
               type="text"
               placeholder="Feedback Titel"
@@ -70,7 +82,6 @@
               } @else {
               <app-icon
                 [iconName]="'done_all'"
-                [iconColor]="'#0d1424'"
                 [iconColor]="'#fc03d5'"
                 [iconSize]="'2.8rem'"
               ></app-icon>
@@ -184,7 +195,21 @@
 
       <div class="card-footer">
         <button (click)="handleSendButtonClick()" class="send-button">
-          senden
+          <span>senden</span>
+          @if (!sendingProcessing) {
+          <app-icon
+            [iconName]="'send'"
+            [iconColor]="'#ffffff'"
+            [iconSize]="'2.4rem'"
+          ></app-icon>
+          } @else {
+          <app-icon
+            [iconName]="'progress_activity'"
+            [iconColor]="'#ffffff'"
+            [iconSize]="'2.4rem'"
+            class="loading-spinner"
+          ></app-icon>
+          }
         </button>
       </div>
     </div>

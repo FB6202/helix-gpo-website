@@ -44,27 +44,24 @@ export class MainComponent implements OnInit {
     this.loadProjects();
     this.loadTestimonials();
     this.getTestimonialsAverage();
-
-    //this.projects = this.projectsService.tempProjects;
-    //this.shownProjects = this.projectsService.tempProjects.slice(0, 3);
-
-    //this.testimonials = this.testimonialsService.tempTestimonials;
-    //this.shownTestimonialsLeft = this.testimonialsService.tempTestimonials.slice(0, 3);
-    //this.shownTestimonialsRight = this.testimonialsService.tempTestimonials.slice(3, 6);
-    //this.shownTestimonials = this.shownTestimonialsLeft;
   }
 
   private loadProjects() {
     this.loadingProjects = true;
     this.projectsService.getAllProjects().subscribe({
       next: (projectsResponse) => {
-        this.projects = projectsResponse;
+        this.projects = projectsResponse.slice(0, 9);
         this.shownProjects = this.projects.slice(0, 3);
         this.loadingProjects = false;
       },
-      error: (error) => {
+      error: () => {
+        this.projects = [];
         this.loadingProjects = false;
-        console.error('Fehler beim Laden der Projekte:', error);
+        this.utilService.showToastr(
+          'Fehler!',
+          'Projekte konnten nicht geladen werden!',
+          'error'
+        );
       },
     });
   }
@@ -73,14 +70,21 @@ export class MainComponent implements OnInit {
     this.testimonialsService.getAllTestimonials().subscribe({
       next: (testimonialsResponse) => {
         this.testimonials = testimonialsResponse;
+
         this.shownTestimonialsLeft = this.testimonials.slice(0, 3);
         this.shownTestimonialsRight = this.testimonials.slice(3, 6);
         this.shownTestimonials = this.shownTestimonialsLeft;
+
         this.loadingTestimonials = false;
       },
-      error: (error) => {
+      error: () => {
+        this.testimonials = [];
         this.loadingTestimonials = false;
-        console.error('Fehler beim Laden der Referenzen:', error);
+        this.utilService.showToastr(
+          'Fehler!',
+          'Referenzen konnten nicht geladen werden!',
+          'error'
+        );
       },
     });
   }

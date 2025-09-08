@@ -1,17 +1,28 @@
 <section class="project-details-section">
   <div class="project-details-container">
+    @if (true) {
     <div class="project-details-card">
       <div class="card-header">
-        <p class="headline-p">Projekt</p>
-        <h1 class="headline-text">{{ project.title }}</h1>
+        <div class="card-left-header">
+          <p class="headline-p">Projekt</p>
+          <h1 class="headline-text">{{ project.title }}</h1>
+        </div>
+        <button class="back-button" (click)="handleBackButtonClick()">
+          <app-icon
+            iconName="redo"
+            iconColor="#0d1424"
+            iconSize="2.2rem"
+          ></app-icon>
+          <p class="back-text">zurück</p>
+        </button>
       </div>
 
       <div class="card-content">
         <div class="image-container">
           <img
-            [src]="project.imageUrl"
-            alt="Project Image"
             class="project-image"
+            [src]="project.imageUrl === '' ? '' : project.imageUrl"
+            [alt]="project.title"
           />
         </div>
         <div class="project-right">
@@ -82,5 +93,13 @@
         </div>
       </div>
     </div>
+    } @else {
+    <app-icon
+      [iconName]="'progress_activity'"
+      [iconColor]="'#0d1424'"
+      [iconSize]="'2.8rem'"
+      class="loading-spinner"
+    ></app-icon>
+    }
   </div>
 </section>

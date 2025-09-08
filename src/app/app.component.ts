@@ -1,9 +1,12 @@
 import { Component, inject } from '@angular/core';
 import { RouterOutlet, Router } from '@angular/router';
+import { IconComponent } from './util/icon/icon.component';
+import { MatDialog } from '@angular/material/dialog';
+import { MenuModalComponent } from './util/menu-modal/menu-modal.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
+  imports: [RouterOutlet, IconComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
 })
@@ -11,6 +14,7 @@ export class AppComponent {
   title = 'helix-gpo-website';
 
   private router: Router = inject(Router);
+  private dialog: MatDialog = inject(MatDialog);
 
   ngOnInit() {
     this.updateYear();
@@ -34,9 +38,7 @@ export class AppComponent {
       currentUrl === '/error' ||
       currentUrl.startsWith('/project-details')
     ) {
-      this.router.navigate(['/']).then(() => {
-        this.scrollToElement(elementId);
-      });
+      this.router.navigate(['/']);
     } else {
       this.scrollToElement(elementId);
     }
@@ -52,6 +54,18 @@ export class AppComponent {
     const element = document.getElementById(elementId);
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
+    }
+  }
+
+  handleMenuButtonClick(): any {
+    let dialogRef = this.dialog.open(MenuModalComponent, {
+      panelClass: 'menu-modal',
+    });
+
+    if (dialogRef) {
+      dialogRef.afterClosed().subscribe((element) => {
+        this.scrollToElementByButton(element);
+      });
     }
   }
 }

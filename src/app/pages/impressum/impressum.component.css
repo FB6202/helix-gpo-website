@@ -21,13 +21,54 @@ section {
   font-size: 4rem;
   font-weight: 700;
   letter-spacing: -0.06rem;
-  margin-bottom: 4.8rem;
 }
 
 .header-text {
   font-size: 2.4rem;
   font-weight: 500;
   margin-bottom: 2rem;
+}
+
+.impressum-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 3.2rem;
+
+  width: 100%;
+  margin-bottom: 4.8rem;
+}
+
+.headline-container {
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+
+  color: var(--main-text-color-dark);
+  font-family: inherit;
+  font-size: 1.8rem;
+  font-weight: 500;
+  padding: 0.8rem 1.6rem;
+  border: none;
+  cursor: pointer;
+  background-color: var(--accent-white);
+  box-shadow: 0rem 0.2rem 0.2rem 0.14rem var(--white-shadow-color);
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  background-color: var(--accent-white-hover);
+}
+
+.back-button:active {
+  background-color: var(--accent-white-active);
 }
 
 .container .line {

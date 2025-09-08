@@ -4,7 +4,7 @@ import { IconComponent } from '../../util/icon/icon.component';
 import { UtilService } from '../../services/util.service';
 import { NgStyle } from '@angular/common';
 import { ProjectsService } from '../../services/projects.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   selector: 'app-project-details',
@@ -16,8 +16,11 @@ export class ProjectDetailsComponent implements OnInit {
   private utilService: UtilService = inject(UtilService);
   private projectService: ProjectsService = inject(ProjectsService);
   private route: ActivatedRoute = inject(ActivatedRoute);
+  private router: Router = inject(Router);
 
   private projectId: number = 0;
+
+  loadingProject = false;
 
   project: Project = {
     id: 0,
@@ -47,18 +50,28 @@ export class ProjectDetailsComponent implements OnInit {
   }
 
   private loadProject() {
+    this.loadingProject = true;
     this.projectService.getProjectById(this.projectId).subscribe({
       next: (response) => {
         this.project = response;
-        this.project.imageUrl = 'images/angebote/Monitoring.jpg';
+        this.loadingProject = false;
       },
-      error: (error) => {
-        console.error('Fehler beim Laden des Projekts:', error);
+      error: () => {
+        this.loadingProject = false;
+        this.utilService.showToastr(
+          'Fehler!',
+          'Das Projekt konnte nicht geladen werden!',
+          'error'
+        );
       },
     });
   }
 
   formatMonthYear(dateString: string): string {
     return this.utilService.formatMonthYear(dateString);
+  }
+
+  handleBackButtonClick() {
+    this.router.navigate(['/']);
   }
 }

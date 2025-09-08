@@ -64,6 +64,13 @@
           </li>
         </ul>
       </nav>
+      <button class="menu-button" (click)="handleMenuButtonClick()">
+        <app-icon
+          [iconName]="'menu'"
+          [iconColor]="'#fff'"
+          [iconSize]="'4rem'"
+        ></app-icon>
+      </button>
     </div>
   </header>
 
@@ -135,6 +142,13 @@
             </li>
           </ul>
         </nav>
+        <button class="menu-button" (click)="handleMenuButtonClick()">
+          <app-icon
+            [iconName]="'menu'"
+            [iconColor]="'#fff'"
+            [iconSize]="'4rem'"
+          ></app-icon>
+        </button>
         <div class="social-media">
           <img src="images/footer/facebook.png" alt="Facebook Icon" />
           <img src="images/footer/insta.png" alt="Instagram Icon" />
@@ -142,9 +156,6 @@
         </div>
       </div>
       <div class="bottom-content">
-        <p class="copyright">
-          &copy; <span class="year">2025</span> Helix GPO. All rights reserved.
-        </p>
         <div class="functions">
           <a class="function-link" (click)="routing('datenschutz')"
             >Datenschutz</a
@@ -154,6 +165,9 @@
             >Feedback geben</a
           >
         </div>
+        <p class="copyright">
+          &copy; <span class="year">2025</span> Helix GPO. All rights reserved.
+        </p>
       </div>
     </div>
   </footer>

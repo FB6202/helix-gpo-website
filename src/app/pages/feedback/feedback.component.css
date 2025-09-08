@@ -33,9 +33,39 @@
 }
 
 .card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
   padding: 2.4rem 3.2rem;
   background-color: var(--main-dark-blue);
   color: var(--main-text-color-light);
+}
+
+.back-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+
+  color: var(--main-text-color-dark);
+  font-family: inherit;
+  font-size: 1.6rem;
+  font-weight: 500;
+  padding: 0.6rem 1.2rem;
+  border: none;
+  cursor: pointer;
+  background-color: var(--accent-white);
+  box-shadow: 0rem 0.2rem 0.2rem 0.14rem var(--white-shadow-color);
+  transition: all 0.3s;
+}
+
+.back-button:hover {
+  background-color: var(--accent-white-hover);
+}
+
+.back-button:active {
+  background-color: var(--accent-white-active);
 }
 
 .card-content {
@@ -125,16 +155,6 @@
   background-color: var(--main-dark-blue-active);
 }
 
-.loading-spinner {
-  animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-  to {
-    transform: rotate(360deg);
-  }
-}
-
 input[type="file"] {
   position: absolute;
   opacity: 0;
@@ -199,10 +219,15 @@ input[type="file"] {
 }
 
 .send-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.8rem;
+
   font-family: inherit;
   font-size: 1.6rem;
   font-weight: 500;
-  padding: 0.6rem 2rem;
+  padding: 0.6rem 1.4rem;
   border: none;
   cursor: pointer;
   color: var(--main-text-color-light);
@@ -217,6 +242,16 @@ input[type="file"] {
 
 .send-button:active {
   background-color: var(--accent-pink-active);
+}
+
+.loading-spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
 }
 
 /* Scrollbar */
@@ -241,4 +276,26 @@ input[type="file"] {
 ::-webkit-scrollbar-thumb:hover {
   background: var(--main-text-color-dark);
   cursor: pointer;
+}
+
+@media (max-width: 48em) {
+  .back-text {
+    display: none;
+  }
+
+  .feedback-card {
+    width: 100%;
+  }
+
+  .card-content {
+    display: flex;
+    flex-direction: column;
+    gap: 4rem;
+
+    height: auto;
+  }
+
+  .feedback-point {
+    margin-bottom: 4rem;
+  }
 }
