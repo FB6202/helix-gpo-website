@@ -48,13 +48,11 @@
           class="step-icon"
         ></app-icon>
         <p class="step-headline">
-          Prozesse analysieren, Digitalisierungspotenziale erkennen
-          <br />
-          und nachhaltige Lösungen entwickeln
+          Prozesse analysieren, Digitalisierungspotenziale erkennen und
+          nachhaltige Lösungen entwickeln
         </p>
         <p class="step-text">
           Eine fundierte Analyse ist der Schlüssel für effiziente und
-          <br />
           zukunftsfähige Prozesse!
         </p>
       </div>
@@ -67,13 +65,11 @@
         ></app-icon>
         <p class="step-headline">
           Einheitliche Prozesse schaffen, um Effizienz, Schulung und
-          <br />
           Skalierbarkeit zu verbessern
         </p>
         <p class="step-text">
-          Standardisierte Abläufe erleichtern Schulungen und fördern
-          <br />
-          nachhaltige Unternehmensentwicklung!
+          Standardisierte Abläufe erleichtern Schulungen und fördern nachhaltige
+          Unternehmensentwicklung!
         </p>
       </div>
       <div class="optimize-step">
@@ -84,13 +80,11 @@
           class="step-icon"
         ></app-icon>
         <p class="step-headline">
-          Geschäftsprozesse effizienter, digitaler und
-          <br />
-          leistungsstärker gestalten
+          Geschäftsprozesse effizienter, digitaler und leistungsstärker
+          gestalten
         </p>
         <p class="step-text">
           Wir optimieren Abläufe durch Digitalisierung, Automatisierung und
-          <br />
           individuelle Prozessanpassung!
         </p>
       </div>
@@ -103,13 +97,11 @@
         ></app-icon>
         <p class="step-headline">
           Langfristige Begleitung für nachhaltige Prozess- und
-          <br />
           Softwareentwicklung
         </p>
         <p class="step-text">
-          Wir sind Ihr Partner für kontinuierliche Verbesserung und
-          <br />
-          digitale Innovation!
+          Wir sind Ihr Partner für kontinuierliche Verbesserung und digitale
+          Innovation!
         </p>
       </div>
     </div>
@@ -358,73 +350,84 @@
     <p class="headline-p">Erkunde</p>
     <h1 class="headline-text">Bisherige Projekte</h1>
 
-    @if (!loadingProjects) {
-    <div class="projects-grid">
-      @for (project of shownProjects; track project.id; let idx = $index) {
-      <div class="project-card">
-        <div class="project-image-container">
-          <img
-            class="project-image"
-            [src]="
-              project.imageUrl === ''
-                ? 'images/placeholder profile picture.png'
-                : project.imageUrl
-            "
-            [alt]="project.title"
-          />
-        </div>
-        <div class="project-content">
-          <div class="project-text">
-            <p class="project-title">{{ project.title }}</p>
-            <p class="project-description">
-              {{ shortenText(project.description, 120, true) }}
-            </p>
+    @if (environment == 'staging' || environment == 'prod') {
+    <div>
+      @if (!loadingProjects) {
+      <div class="projects-grid">
+        @for (project of shownProjects; track project.id; let idx = $index) {
+        <div class="project-card">
+          <div class="project-image-container">
+            <img
+              class="project-image"
+              [src]="
+                project.imageUrl === ''
+                  ? 'images/placeholder profile picture.png'
+                  : project.imageUrl
+              "
+              [alt]="project.title"
+            />
           </div>
-          <div class="tags">
-            @for (tag of project.tags; track tag.value; let tagIdx = $index) {
-            <div>
-              <span class="tag" [ngStyle]="{ 'background-color': tag.color }">{{
-                tag.value
-              }}</span>
+          <div class="project-content">
+            <div class="project-text">
+              <p class="project-title">{{ project.title }}</p>
+              <p class="project-description">
+                {{ shortenText(project.description, 120, true) }}
+              </p>
             </div>
-            }
-          </div>
-          <div class="card-footer">
-            <div class="project-time">
-              <app-icon
-                [iconName]="'event_upcoming'"
-                [iconColor]="'#0d1424'"
-                [iconSize]="'3.2rem'"
-                class="step-icon"
-              ></app-icon>
-              <span class="date-string">{{
-                formatMonthYear(project.startDate.toString())
-              }}</span>
+            <div class="tags">
+              @for (tag of project.tags; track tag.value; let tagIdx = $index) {
+              <div>
+                <span
+                  class="tag"
+                  [ngStyle]="{ 'background-color': tag.color }"
+                  >{{ tag.value }}</span
+                >
+              </div>
+              }
             </div>
-            <button
-              (click)="handleProjectDetailsButtonClick(project.id)"
-              class="more-button"
-            >
-              Details
-            </button>
+            <div class="card-footer">
+              <div class="project-time">
+                <app-icon
+                  [iconName]="'event_upcoming'"
+                  [iconColor]="'#0d1424'"
+                  [iconSize]="'3.2rem'"
+                  class="step-icon"
+                ></app-icon>
+                <span class="date-string">{{
+                  formatMonthYear(project.startDate.toString())
+                }}</span>
+              </div>
+              <button
+                (click)="handleProjectDetailsButtonClick(project.id)"
+                class="more-button"
+              >
+                Details
+              </button>
+            </div>
           </div>
         </div>
+        } @empty {
+        <p class="resource-text">Projekte konnten nicht geladen werden!</p>
+        }
       </div>
-      } @empty {
-      <p class="resource-text">Projekte konnten nicht geladen werden!</p>
+      } @else {
+      <app-icon
+        [iconName]="'progress_activity'"
+        [iconColor]="'#ffffff'"
+        [iconSize]="'3.6rem'"
+        class="loading-spinner"
+      ></app-icon>
       }
     </div>
     } @else {
-    <app-icon
-      [iconName]="'progress_activity'"
-      [iconColor]="'#ffffff'"
-      [iconSize]="'3.6rem'"
-      class="loading-spinner"
-    ></app-icon>
+    <div class="coming-soon-projects">
+      <p>Bald verfügbar ...</p>
+    </div>
     }
 
     <!-- button only shown if more than 3 projects do exist -->
-    @if (projects.length > 3) {
+    @if (projects.length > 3 && (environment == 'staging' || environment ==
+    'prod')) {
     <div class="button-div">
       <button
         class="projects-button"
@@ -442,88 +445,98 @@
     <p class="headline-p">Vertraue</p>
     <h1 class="headline-text">Referenzen</h1>
 
-    <p class="testimonials-text">
-      Unsere Kunden bewerten uns im Durchschnitt mit
-      <span class="rating">{{ averageRating }}</span> von 5 Sternen - basierend
-      auf {{ testimonials.length }} verifizierten Erfahrungsberichten!
-    </p>
+    @if (environment == 'staging' || environment == 'prod') {
+    <div>
+      <p class="testimonials-text">
+        Unsere Kunden bewerten uns im Durchschnitt mit
+        <span class="rating">{{ averageRating }}</span> von 5 Sternen -
+        basierend auf {{ testimonials.length }} verifizierten
+        Erfahrungsberichten!
+      </p>
 
-    @if (!loadingTestimonials) {
-    <div class="testimonials-grid">
-      @for (testimonial of shownTestimonials; track testimonial.id; let idx =
-      $index) {
-      <div class="testimonial-card">
-        <div class="testimonial-header">
-          <div class="image-container">
-            <img
-              class="testimonial-image"
-              [src]="
-                testimonial.imageUrl === ''
-                  ? 'images/placeholder profile picture.png'
-                  : testimonial.imageUrl
-              "
-              [alt]="testimonial.title"
-            />
+      @if (!loadingTestimonials) {
+      <div class="testimonials-grid">
+        @for (testimonial of shownTestimonials; track testimonial.id; let idx =
+        $index) {
+        <div class="testimonial-card">
+          <div class="testimonial-header">
+            <div class="image-container">
+              <img
+                class="testimonial-image"
+                [src]="
+                  testimonial.imageUrl === ''
+                    ? 'images/placeholder profile picture.png'
+                    : testimonial.imageUrl
+                "
+                [alt]="testimonial.title"
+              />
+            </div>
+            <div class="stars">
+              @for (i of ratingArray; track i; let starIdx = $index) {
+              <app-icon
+                [iconName]="'star'"
+                [iconSize]="'2.4rem'"
+                [iconColor]="i > testimonial.result ? '#cccccc' : '#fc03d5'"
+              ></app-icon>
+              }
+            </div>
+            <div class="testimonial-time">
+              <app-icon
+                [iconName]="'calendar_check'"
+                [iconColor]="'#0d1424'"
+                [iconSize]="'2.4rem'"
+              ></app-icon>
+              <span class="testimonial-date">{{
+                formatMonthYear(testimonial.creationDate.toString())
+              }}</span>
+            </div>
           </div>
-          <div class="stars">
-            @for (i of ratingArray; track i; let starIdx = $index) {
-            <app-icon
-              [iconName]="'star'"
-              [iconSize]="'2.4rem'"
-              [iconColor]="i > testimonial.result ? '#cccccc' : '#fc03d5'"
-            ></app-icon>
-            }
-          </div>
-          <div class="testimonial-time">
-            <app-icon
-              [iconName]="'calendar_check'"
-              [iconColor]="'#0d1424'"
-              [iconSize]="'2.4rem'"
-            ></app-icon>
-            <span class="testimonial-date">{{
-              formatMonthYear(testimonial.creationDate.toString())
-            }}</span>
+          <div class="testimonial-content">
+            <div class="description-container">
+              <p class="testimonial-description">
+                {{ shortenText(testimonial.description, 100, true) }}
+              </p>
+            </div>
+            <div class="testimonial-footer">
+              <div class="testimonial-name">
+                {{ testimonial.websiteProjectDto.websitePartnerDto.name }}
+              </div>
+              <div class="testimonial-role">
+                {{ testimonial.websiteProjectDto.websitePartnerDto.job }}
+              </div>
+              <div class="testimonial-company">
+                {{
+                  testimonial.websiteProjectDto.websitePartnerDto
+                    .websiteCompanyDto.name
+                }}
+              </div>
+            </div>
           </div>
         </div>
-        <div class="testimonial-content">
-          <div class="description-container">
-            <p class="testimonial-description">
-              {{ shortenText(testimonial.description, 100, true) }}
-            </p>
-          </div>
-          <div class="testimonial-footer">
-            <div class="testimonial-name">
-              {{ testimonial.websiteProjectDto.websitePartnerDto.name }}
-            </div>
-            <div class="testimonial-role">
-              {{ testimonial.websiteProjectDto.websitePartnerDto.job }}
-            </div>
-            <div class="testimonial-company">
-              {{
-                testimonial.websiteProjectDto.websitePartnerDto
-                  .websiteCompanyDto.name
-              }}
-            </div>
-          </div>
-        </div>
+        } @empty {
+        <p class="resource-text">Referenzen konnten nicht geladen werden!</p>
+        }
       </div>
-      } @empty {
-      <p class="resource-text">Referenzen konnten nicht geladen werden!</p>
+      } @else {
+      <div>
+        <app-icon
+          [iconName]="'progress_activity'"
+          [iconColor]="'#0d1424'"
+          [iconSize]="'3.6rem'"
+          class="loading-spinner"
+        ></app-icon>
+      </div>
       }
     </div>
     } @else {
-    <div>
-      <app-icon
-        [iconName]="'progress_activity'"
-        [iconColor]="'#0d1424'"
-        [iconSize]="'3.6rem'"
-        class="loading-spinner"
-      ></app-icon>
+    <div class="coming-soon-testimonials">
+      <p>Bald verfügbar ...</p>
     </div>
     }
 
     <!-- button only shown if more than 3 testimonials do exist -->
-    @if (testimonials.length > 3) {
+    @if (testimonials.length > 3 && (environment == 'staging' || environment ==
+    'prod')) {
     <div class="page-decision">
       <button
         class="page-button left-page-button"

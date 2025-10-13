@@ -80,6 +80,11 @@
 
   <footer class="footer">
     <div class="container">
+      <div class="staging-text">
+        Diese Website befindet sich aktuell in der Staging-Phase. Wir arbeiten
+        bereits an der finalen Version - echte Projekte und Referenzen folgen
+        bald!
+      </div>
       <div class="top-content">
         <img src="images/logo-no-bg.svg" alt="Logo" />
         <nav>
@@ -150,9 +155,25 @@
           ></app-icon>
         </button>
         <div class="social-media">
-          <img src="images/footer/facebook.png" alt="Facebook Icon" />
-          <img src="images/footer/insta.png" alt="Instagram Icon" />
-          <img src="images/footer/linked in.png" alt="Linked In Icon" />
+          <img
+            src="images/footer/facebook.png"
+            alt="Facebook Icon"
+            (click)="
+              toToLink('https://www.facebook.com/profile.php?id=61580391037784')
+            "
+          />
+          <img
+            src="images/footer/insta.png"
+            alt="Instagram Icon"
+            (click)="toToLink('https://www.instagram.com/_helix_gpo/')"
+          />
+          <img
+            src="images/footer/linked in.png"
+            alt="Linked In Icon"
+            (click)="
+              toToLink('https://www.linkedin.com/in/henry-heller-aa2547383/')
+            "
+          />
         </div>
       </div>
       <div class="bottom-content">

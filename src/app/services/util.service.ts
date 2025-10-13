@@ -1,11 +1,16 @@
 import { inject, Injectable } from '@angular/core';
 import { ToastrService } from 'ngx-toastr';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
 })
 export class UtilService {
   private toastrService: ToastrService = inject(ToastrService);
+
+  getEnvironment(): string {
+    return environment.ENVIRONMENT;
+  }
 
   shorten(text: string, maxLength: number, addEllipsis = true): string {
     if (text.length <= maxLength) {

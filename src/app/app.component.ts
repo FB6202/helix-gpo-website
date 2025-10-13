@@ -3,6 +3,7 @@ import { RouterOutlet, Router } from '@angular/router';
 import { IconComponent } from './util/icon/icon.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MenuModalComponent } from './util/menu-modal/menu-modal.component';
+import { UtilService } from './services/util.service';
 
 @Component({
   selector: 'app-root',
@@ -15,9 +16,14 @@ export class AppComponent {
 
   private router: Router = inject(Router);
   private dialog: MatDialog = inject(MatDialog);
+  private utilService: UtilService = inject(UtilService);
+
+  environment = '';
 
   ngOnInit() {
     this.updateYear();
+
+    this.environment = this.utilService.getEnvironment();
   }
 
   updateYear() {
@@ -45,6 +51,19 @@ export class AppComponent {
   }
 
   routing(url: string) {
+    if (
+      url === 'feedback' &&
+      this.environment != 'staging' &&
+      this.environment != 'prod'
+    ) {
+      this.utilService.showToastr(
+        'Info',
+        'Dieses Feature wird bald verfügbar sein!',
+        'success'
+      );
+      return;
+    }
+
     this.router.navigate([url]).then(() => {
       this.scrollToElement('header');
     });
@@ -55,6 +74,10 @@ export class AppComponent {
     if (element) {
       element.scrollIntoView({ behavior: 'smooth' });
     }
+  }
+
+  toToLink(url: string) {
+    window.open(url, '_blank');
   }
 
   handleMenuButtonClick(): any {

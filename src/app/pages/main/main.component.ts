@@ -21,6 +21,8 @@ export class MainComponent implements OnInit {
   private utilService: UtilService = inject(UtilService);
   private router: Router = inject(Router);
 
+  environment = '';
+
   projects: Project[] = [];
   shownProjects: Project[] = [];
 
@@ -41,9 +43,13 @@ export class MainComponent implements OnInit {
   showLeftTestimonials = true;
 
   ngOnInit(): void {
-    this.loadProjects();
-    this.loadTestimonials();
-    this.getTestimonialsAverage();
+    this.environment = this.utilService.getEnvironment();
+
+    if (this.environment == 'staging' || this.environment == 'prod') {
+      this.loadProjects();
+      this.loadTestimonials();
+      this.getTestimonialsAverage();
+    }
   }
 
   private loadProjects() {

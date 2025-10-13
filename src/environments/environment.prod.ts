@@ -1,7 +1,7 @@
 export const environment = {
   PRODUCTION: false,
-  ENVIRONMENT: 'production',
-  PROJECT_SERVICE_BASE_URL: 'http://localhost:8084/api/v1/projects',
-  TESTIMONIAL_SERVICE_BASE_URL: 'http://localhost:8082/api/v1/testimonials',
+  ENVIRONMENT: 'prod',
+  PROJECT_SERVICE_BASE_URL: 'https://api.helix-gpo.com/api/v1/projects',
+  TESTIMONIAL_SERVICE_BASE_URL: 'https://api.helix-gpo.com/api/v1/testimonials',
   API_KEY: '',
 };

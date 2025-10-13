@@ -116,6 +116,12 @@
   padding: 12rem 0;
 }
 
+.staging-text {
+  font-size: 1.6rem;
+  margin-bottom: 6.4rem;
+  line-height: 1.5;
+}
+
 .top-content {
   display: flex;
   justify-content: space-between;

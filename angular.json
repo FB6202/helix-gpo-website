@@ -94,6 +94,9 @@
             "development": {
               "buildTarget": "helix-gpo-website:build:development"
             },
+            "test": {
+              "buildTarget": "helix-gpo-website:build:test"
+            },
             "staging": {
               "buildTarget": "helix-gpo-website:build:staging"
             }
