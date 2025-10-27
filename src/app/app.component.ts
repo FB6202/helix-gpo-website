@@ -4,6 +4,7 @@ import { IconComponent } from './util/icon/icon.component';
 import { MatDialog } from '@angular/material/dialog';
 import { MenuModalComponent } from './util/menu-modal/menu-modal.component';
 import { UtilService } from './services/util.service';
+import { environment } from '../environments/environment';
 
 @Component({
   selector: 'app-root',

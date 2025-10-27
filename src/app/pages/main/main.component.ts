@@ -43,13 +43,9 @@ export class MainComponent implements OnInit {
   showLeftTestimonials = true;
 
   ngOnInit(): void {
-    this.environment = this.utilService.getEnvironment();
-
-    if (this.environment == 'staging' || this.environment == 'prod') {
-      this.loadProjects();
-      this.loadTestimonials();
-      this.getTestimonialsAverage();
-    }
+    this.loadProjects();
+    this.loadTestimonials();
+    this.getTestimonialsAverage();
   }
 
   private loadProjects() {
@@ -73,6 +69,7 @@ export class MainComponent implements OnInit {
   }
 
   private loadTestimonials() {
+    this.loadingTestimonials = true;
     this.testimonialsService.getAllTestimonials().subscribe({
       next: (testimonialsResponse) => {
         this.testimonials = testimonialsResponse;
@@ -147,10 +144,12 @@ export class MainComponent implements OnInit {
   handleShowLeftPage() {
     this.showLeftTestimonials = true;
     this.shownTestimonials = this.shownTestimonialsLeft;
+    this.scrollToElementByButton('testimonials');
   }
 
   handleShowRightPage() {
     this.showLeftTestimonials = false;
     this.shownTestimonials = this.shownTestimonialsRight;
+    this.scrollToElementByButton('testimonials');
   }
 }

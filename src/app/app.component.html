@@ -80,11 +80,13 @@
 
   <footer class="footer">
     <div class="container">
+      @if (environment !== 'prod') {
       <div class="staging-text">
         Diese Website befindet sich aktuell in der Staging-Phase. Wir arbeiten
         bereits an der finalen Version - echte Projekte und Referenzen folgen
         bald!
       </div>
+      }
       <div class="top-content">
         <img src="images/logo-no-bg.svg" alt="Logo" />
         <nav>
