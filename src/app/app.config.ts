@@ -7,12 +7,11 @@ import { provideToastr } from 'ngx-toastr';
 import { provideAnimations } from '@angular/platform-browser/animations';
 import { IMAGE_CONFIG } from '@angular/common';
 import { errorInterceptor } from './interceptors/error.interceptor';
-import { apiKeyInterceptor } from './interceptors/api.key.interceptor';
 
 export const appConfig: ApplicationConfig = {
   providers: [
     provideZoneChangeDetection({ eventCoalescing: true }),
-    provideHttpClient(withInterceptors([errorInterceptor, apiKeyInterceptor])),
+    provideHttpClient(withInterceptors([errorInterceptor])),
     provideAnimations(),
     provideRouter(
       routes,

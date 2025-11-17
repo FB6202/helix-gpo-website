@@ -54,6 +54,7 @@ export class AppComponent {
   routing(url: string) {
     if (
       url === 'feedback' &&
+      this.environment != 'dev' &&
       this.environment != 'staging' &&
       this.environment != 'prod'
     ) {
