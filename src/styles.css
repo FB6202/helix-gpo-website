@@ -130,6 +130,13 @@ input {
 
   --toastr-warning: #7f6fea;
   --toastr-warning-hover: #7264d3;
+
+  /* chatbot */
+  --chat--color-primary: #03dbff !important;
+  --chat--color-secondary: #ffffff !important;
+  --chat--window--width: 360px !important;
+  --chat--window--height: 500px !important;
+  --chat--border-radius: 0.5rem !important;
 }
 
 /* Toast Styles */
